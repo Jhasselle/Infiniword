@@ -10,14 +10,15 @@ import Foundation
 
 // For later positioning, we may have to manually set up the ui view
 class Crossword: UIStackView {
-    var width = 3 // lowest allowed value
-    var height = 0 // random heuristic, lets seeeee
+    var width = 5 // lowest allowed value
+    var height = 64 // random heuristic, lets seeeee
     var Rows = [UIStackView]()
+    var numberOfRows = 0
+    var currentRowIndex = 0
     var Tiles = [Tile]()
-//    var TileGrid = [[Tile]]()
     var Words = [WordStruct]()
     var enabled = false
-    var displayHeight = 50
+    var displayHeight = 13
     
     func initialize(width:Int, height:Int) {
         self.axis = .vertical
@@ -27,9 +28,13 @@ class Crossword: UIStackView {
         self.spacing = CGFloat(5.0)
         self.width = width
         self.height = height
-        displayHeight = width + 5
+        self.numberOfRows = width * height
+        self.displayHeight = width + 5
     }
     
+    
+    // Input: correctly defined WordStruct
+    //
     func setTilesForWord(_ newWordStruct: WordStruct) {
     
         let wordLength = newWordStruct.word.count
@@ -50,13 +55,16 @@ class Crossword: UIStackView {
                 Tiles[tileIndex].xWordPos = (x, y)
                 Tiles[tileIndex].xWordIndex = newWordStruct.wordIndex
                 Tiles[tileIndex].setTitle(word[i], for: .normal)
-                Tiles[tileIndex].backgroundColor = UIColor.gray
+                Tiles[tileIndex].backgroundColor = UIColor.white
+                Tiles[tileIndex].setTitleColor(UIColor.black, for: .normal)
                 
             }
         }
         //isVertical
         else {
+//            print("Word string: \(newWordStruct.word)")
             for i in (0..<wordLength).reversed() {
+                
                 relativeX = x
                 relativeY = y - i
                 let tileIndex = (relativeY * width) + relativeX
@@ -67,7 +75,12 @@ class Crossword: UIStackView {
                 Tiles[tileIndex].yWordIndex = newWordStruct.wordIndex
                 Tiles[tileIndex].letter = word[i]
                 Tiles[tileIndex].setTitle(word[i], for: .normal)
-                Tiles[tileIndex].backgroundColor = UIColor.gray
+                Tiles[tileIndex].backgroundColor = UIColor.white
+                Tiles[tileIndex].setTitleColor(UIColor.black, for: .normal)
+                
+//                print("Word length: \(i)")
+//                print("Word tileIndex: \(tileIndex)")
+//                print("Word reversedIndex: \(reversedIndex)")
             }
         }
     }
@@ -77,55 +90,104 @@ class Crossword: UIStackView {
         var currentHeight = 0
         var turnIsHorizontal = true
         var prevWordGiftPos = (x:0,y:0)
-        var prevVertXPos = 0
+        var prevVertPosX = 0
         var currentWordStruct = dict.getRandomWord(size: width)
         setTilesForWord(currentWordStruct)
         var prevWordStruct = currentWordStruct
 
-        print(currentWordStruct.word)
+//        print(currentWordStruct.word)
         while (currentHeight + width < height) {
             turnIsHorizontal = !turnIsHorizontal
-            prevWordStruct = currentWordStruct
-            
-            // This is where the new word is being placed above, if vert
-            if turnIsHorizontal {
-                currentWordStruct = dict.getRandomWord(size: width)
-                var prevWordLetterIndex = prevWordStruct.pos.x
-                var prevWordLetter = Character(prevWordStruct.word[prevWordLetterIndex])
-                dict.getRandomWord(letter: prevWordLetter, index: prevVertXPos, width)
+            if !turnIsHorizontal { // Turn is Vertical
                 
-                currentWordStruct.pos = (0, prevWordStruct.pos.y)
-                
-                
-            }
-            else { // Turn is vertical
-                var prevWordRandIndex = Int.random(in: 0 ... (prevWordStruct.word.count - 1))
-                while prevVertXPos == prevWordRandIndex {
-                    prevWordRandIndex = Int.random(in: 0 ... (prevWordStruct.word.count - 1))
+                // Pick random index to grow our vertical word from
+                var currentVerticalPosX = prevVertPosX
+                while currentVerticalPosX == prevVertPosX {
+                    currentVerticalPosX = Int.random(in: prevWordStruct.pos.x ... (prevWordStruct.word.count - 1))
                 }
-                prevVertXPos = prevWordRandIndex
-                var prevWordRandLetter = Character(prevWordStruct.word[prevWordRandIndex])
-                currentWordStruct = dict.getRandomWord(letter: prevWordRandLetter, index: width - 1, width)
                 
-                currentHeight += currentWordStruct.word.count
+                
+                let prevWordIndexLetter = Character(prevWordStruct.word[currentVerticalPosX])
+                
+                currentWordStruct = dict.getRandomWord(letter: prevWordIndexLetter, index: width - 1, width)
                 currentWordStruct.isWordHorizontal = false
-                currentWordStruct.pos = (prevWordStruct.pos.x + prevWordRandIndex, prevWordStruct.pos.y + currentWordStruct.word.count)
+                
+                currentWordStruct.pos = ((currentVerticalPosX), (prevWordStruct.pos.y + (currentWordStruct.word.count - 1)))
+                currentHeight += currentWordStruct.word.count
+                
+                prevVertPosX = currentVerticalPosX
+            }
+            else { // Turn is horizontal
+                //let prevWordLetterIndex = prevWordStruct.pos.x
+                let prevWordLetter = Character(prevWordStruct.word[0])
+                currentWordStruct = dict.getRandomWord(letter: prevWordLetter, index: prevVertPosX, width)
+                currentWordStruct.pos = (0, prevWordStruct.pos.y)
             }
             
             
-            print("Adding: \(currentWordStruct.word)")
+//            print("Adding: \(currentWordStruct.word)")
             currentWordStruct.wordIndex = Words.count
+            prevWordStruct = currentWordStruct
             Words.append(currentWordStruct)
             setTilesForWord(currentWordStruct)
             
         }
+    }
+    
+    func hideRow(rowIndex : Int) {
+        print("Hiding row: \(rowIndex)")
+        let startingTileIndex = width * rowIndex
+        for i in 0...width-1 {
+            Tiles[startingTileIndex + i].hide()
+            Tiles[startingTileIndex + i].disable()
+        }
+    }
+    
+    func showRow(rowIndex : Int) {
         
-        
+        print("Showing row: \(rowIndex)")
+        let startingTileIndex = width * rowIndex
+        for i in 0...width-1 {
+            Tiles[startingTileIndex + i].show()
+            Tiles[startingTileIndex + i].enable()
+        }
+    }
+    
+    // Deletes bottommost row
+    func deleteRow() {
+        print("Deleting row: \(currentRowIndex)")
+//        let startingTileIndex = currentRowIndex * width
+//        for i in 0...width-1 {
+//
+//            Tiles[startingTileIndex + i].disable()
+//            Tiles[startingTileIndex + i].hide()
+//            Tiles[startingTileIndex + i].removeFromSuperview()
+//        }
+        Rows[currentRowIndex].removeFromSuperview()
+        showRow(rowIndex: currentRowIndex + displayHeight)
+        currentRowIndex += 1
     }
     
     func highlightWord(wordIndex : Int){
-        print("highlightWord(wordIndex : Int)")
     }
+    
+    func highlightWords(wordHorizontalIndex : Int, wordVerticalIndex : Int) {
+        
+    }
+    
+    func clearHighlighting() {
+        for i in 0..<(height*width) {
+            if Tiles[i].yWordExists || Tiles[i].xWordExists {
+                Tiles[i].backgroundColor = UIColor.yellow
+            }
+            else {
+            Tiles[i].backgroundColor = UIColor.black
+            }
+            
+        }
+    }
+    
+    
 }
 
 

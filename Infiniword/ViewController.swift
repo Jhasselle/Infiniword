@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var DEBUG_DELETE = 0
 
     @IBOutlet var KeyboardStackview: UIStackView!
     @IBOutlet var MasterStackview: UIStackView!
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
     func initializeMasterStackview() {
         MasterStackview.axis = .vertical
         MasterStackview.alignment = .fill
-        MasterStackview.distribution = .fill
+        MasterStackview.distribution = .fillEqually
         MasterStackview.spacing = CGFloat(5.0)
     }
     
@@ -63,7 +65,7 @@ class ViewController: UIViewController {
                 tileIndex += 1
                 newTile.initialize(xIndex: x, yIndex: y)
                 newTile.addTarget(self, action: #selector(tilePressed(_:)), for: .touchUpInside)
-                if (y > crossword.width + 5) {
+                if (y > crossword.displayHeight - 1) {
                     newTile.disable()
                     newTile.hide()
                 }
@@ -132,7 +134,7 @@ class ViewController: UIViewController {
             let newLetter = String(char)
             newKeyboardButton.letter = newLetter
             newKeyboardButton.setTitle(newLetter, for: .normal)
-            newKeyboardButton.backgroundColor = UIColor.purple
+            newKeyboardButton.backgroundColor = UIColor.blue
             newKeyboardButton.addTarget(self, action: #selector(keyboardPressed(_:)), for: .touchUpInside)
             
             if currentIndex <= 9 {
@@ -157,8 +159,14 @@ class ViewController: UIViewController {
     
     @IBAction func keyboardPressed(_ sender: KeyboardButton) {
     
-        var newWordStruct = dictionaryOverlord.getRandomWord(letter: Character(sender.letter), index: 0, 5)
-
+//        var newWordStruct = dictionaryOverlord.getRandomWord(letter: Character(sender.letter), index: 0, 5)
+//        crossword.hideRow(rowIndex: DEBUG_DELETE)
+//        crossword.showRow(rowIndex: crossword.displayHeight + DEBUG_DELETE)
+//
+//        // Used to iterate through rows
+//        DEBUG_DELETE += 1
+        crossword.deleteRow()
+        crossword.clearHighlighting()  
     }
 }
 

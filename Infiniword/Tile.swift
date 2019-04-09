@@ -39,35 +39,39 @@ class Tile : UIButton {
         adjustViewFit()
         self.disable() // show black box
         self.hide() // make invisible
+        self.setTitleColor(UIColor.white, for: .normal)
     }
     
     func adjustViewFit() {
-        
-        self.backgroundColor = UIColor.purple
-        // Title
-        let newTitle = " \(xIndex),\(yIndex)"
-        self.setTitle(newTitle, for: UIControl.State.normal)
     }
     
+    // Makes invisible or visible
+    func hide() {
+        self.isHidden = true
+        self.alpha = 0
+    }
+    func show() {
+        self.alpha = 1
+        self.isHidden = false
+        self.setTitleColor(UIColor.black, for: .normal)
+        if (xWordExists || yWordExists) {
+            self.backgroundColor = UIColor.white
+        }
+        else {
+            self.backgroundColor = UIColor.black
+        }
+    }
+    // Prevents them from being pressed
     func enable() {
         self.isEnabled = true
-        self.backgroundColor = UIColor.magenta
     }
     
     func disable() {
         self.isEnabled = false
-        self.backgroundColor = UIColor.black
     }
     
-    func hide() {
-        self.isHidden = true
-        active = false
-    }
+
     
-    func show() {
-        self.isHidden = false
-        active = true
-    }
     
     func isComplete() -> Bool {
         return (xWordComplete && yWordComplete)
