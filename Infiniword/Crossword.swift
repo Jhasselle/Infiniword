@@ -29,7 +29,7 @@ class Crossword: UIStackView {
         self.width = width
         self.height = height
         self.numberOfRows = width * height
-        self.displayHeight = width + 5
+        self.displayHeight = width * 3
     }
     
     
@@ -57,7 +57,6 @@ class Crossword: UIStackView {
                 Tiles[tileIndex].setTitle(word[i], for: .normal)
                 Tiles[tileIndex].backgroundColor = UIColor.white
                 Tiles[tileIndex].setTitleColor(UIColor.black, for: .normal)
-                
             }
         }
         //isVertical
@@ -89,12 +88,13 @@ class Crossword: UIStackView {
         
         var currentHeight = 0
         var turnIsHorizontal = true
-        var prevWordGiftPos = (x:0,y:0)
+        //var prevWordGiftPos = (x:0,y:0)
         var prevVertPosX = 0
         var currentWordStruct = dict.getRandomWord(size: width)
-        setTilesForWord(currentWordStruct)
         var prevWordStruct = currentWordStruct
-
+        setTilesForWord(currentWordStruct)
+        currentHeight += 1
+        
 //        print(currentWordStruct.word)
         while (currentHeight + width < height) {
             turnIsHorizontal = !turnIsHorizontal
@@ -135,7 +135,7 @@ class Crossword: UIStackView {
     }
     
     func hideRow(rowIndex : Int) {
-        print("Hiding row: \(rowIndex)")
+//        print("Hiding row: \(rowIndex)")
         let startingTileIndex = width * rowIndex
         for i in 0...width-1 {
             Tiles[startingTileIndex + i].hide()
@@ -145,7 +145,7 @@ class Crossword: UIStackView {
     
     func showRow(rowIndex : Int) {
         
-        print("Showing row: \(rowIndex)")
+//        print("Showing row: \(rowIndex)")
         let startingTileIndex = width * rowIndex
         for i in 0...width-1 {
             Tiles[startingTileIndex + i].show()
@@ -155,14 +155,16 @@ class Crossword: UIStackView {
     
     // Deletes bottommost row
     func deleteRow() {
-        print("Deleting row: \(currentRowIndex)")
-//        let startingTileIndex = currentRowIndex * width
-//        for i in 0...width-1 {
-//
-//            Tiles[startingTileIndex + i].disable()
-//            Tiles[startingTileIndex + i].hide()
-//            Tiles[startingTileIndex + i].removeFromSuperview()
-//        }
+//        print("Deleting row: \(currentRowIndex)")
+        let startingTileIndex = currentRowIndex * width
+        
+        for i in 0...width-1 {
+            //Make every Tile remove itself
+            Tiles[startingTileIndex + i].removeFromSuperview()
+            if Tiles[startingTileIndex + i].yWordExists {
+//                print(Words[Tiles[startingTileIndex + i].yWordIndex].clue)
+            }
+        }
         Rows[currentRowIndex].removeFromSuperview()
         showRow(rowIndex: currentRowIndex + displayHeight)
         currentRowIndex += 1

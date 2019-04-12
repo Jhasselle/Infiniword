@@ -18,24 +18,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="egP-Tb-9TU">
-                                <rect key="frame" x="20" y="44" width="374" height="558"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-fV-a4e" userLabel="KeyboardStackview">
+                                <rect key="frame" x="20" y="696" width="374" height="166"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-fV-a4e" userLabel="KeyboardStackview">
-                                <rect key="frame" x="20" y="610" width="374" height="252"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4k4-Fp-nJY">
+                                <rect key="frame" x="20" y="44" width="374" height="529"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yDa-ph-hdt">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="610"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="egP-Tb-9TU">
+                                                <rect key="frame" x="-20" y="-360" width="415" height="970"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="pPz-fc-EHU" appends="YES" id="a1p-Yt-j8f"/>
+                                                </connections>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="centerX" secondItem="4k4-Fp-nJY" secondAttribute="centerX" id="Dbu-Ci-HIq"/>
+                                    <constraint firstAttribute="trailing" secondItem="yDa-ph-hdt" secondAttribute="trailing" id="Gs2-OA-5t6"/>
+                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="centerY" secondItem="4k4-Fp-nJY" secondAttribute="centerY" constant="40.5" id="KMB-0e-9Og"/>
+                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="top" secondItem="4k4-Fp-nJY" secondAttribute="top" id="aEA-Hf-ltf"/>
+                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="leading" secondItem="4k4-Fp-nJY" secondAttribute="leading" id="h8c-CU-aqR"/>
+                                    <constraint firstAttribute="bottom" secondItem="yDa-ph-hdt" secondAttribute="bottom" constant="-81" id="nQ7-VI-W6U"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="leading" secondItem="PRs-fV-a4e" secondAttribute="leading" id="39Y-We-4Ee"/>
+                            <constraint firstItem="PRs-fV-a4e" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="696" id="BKo-a4-0YV"/>
+                            <constraint firstItem="PRs-fV-a4e" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Bn6-gl-wqk"/>
+                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="XNK-T7-2EQ"/>
+                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ZXP-bx-Lhz"/>
+                            <constraint firstAttribute="bottom" secondItem="4k4-Fp-nJY" secondAttribute="bottom" constant="323" id="gkL-ad-PhM"/>
+                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="trailing" secondItem="PRs-fV-a4e" secondAttribute="trailing" id="m9f-lV-dyz"/>
+                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="uB4-gL-ZBP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="KeyboardStackview" destination="PRs-fV-a4e" id="es7-cv-EOC"/>
                         <outlet property="MasterStackview" destination="egP-Tb-9TU" id="pmn-AJ-L21"/>
+                        <outlet property="pinchGesture" destination="pPz-fc-EHU" id="prf-7u-BNE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="pPz-fc-EHU"/>
             </objects>
             <point key="canvasLocation" x="136.23188405797103" y="125.22321428571428"/>
         </scene>

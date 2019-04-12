@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var DEBUG_DELETE = 0
-
+    
     @IBOutlet var KeyboardStackview: UIStackView!
     @IBOutlet var MasterStackview: UIStackView!
     var crossword : Crossword!
@@ -157,16 +157,40 @@ class ViewController: UIViewController {
         KeyboardStackview.addArrangedSubview(row3)
     }
     
+    
+    
+    
+    var DEBUG_KEYBOARDNUMPRESSED = 0
+    var DEBUG_LETTER1 = "a"
+    var DEBUG_LETTER2 = "b"
+    
     @IBAction func keyboardPressed(_ sender: KeyboardButton) {
     
-//        var newWordStruct = dictionaryOverlord.getRandomWord(letter: Character(sender.letter), index: 0, 5)
-//        crossword.hideRow(rowIndex: DEBUG_DELETE)
-//        crossword.showRow(rowIndex: crossword.displayHeight + DEBUG_DELETE)
-//
-//        // Used to iterate through rows
-//        DEBUG_DELETE += 1
+        
+
         crossword.deleteRow()
-        crossword.clearHighlighting()  
+        crossword.clearHighlighting()
+        
+        if DEBUG_KEYBOARDNUMPRESSED == 0 {
+            DEBUG_LETTER1 = sender.letter
+            DEBUG_KEYBOARDNUMPRESSED += 1
+        }
+        else {
+            DEBUG_LETTER2 = sender.letter
+            
+            var newWordStruct = dictionaryOverlord.getRandomWord(letter1: Character(DEBUG_LETTER1), letterIndex1: 0, letter2: Character(DEBUG_LETTER2), letterIndex2: 3, 0)
+//            print(newWordStruct.word)
+            
+            DEBUG_KEYBOARDNUMPRESSED = 0
+        }
     }
+    @IBOutlet var pinchGesture: UIPinchGestureRecognizer!
+    // MARK: Gesture Stuff
+//    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture))
+//    
+    
+    
+    
+    
 }
 

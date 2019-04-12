@@ -123,26 +123,55 @@ class DictionaryOverlord {
         
         return newWordStruct
     }
+    
+    
+    
+// This is the brute force implementation of the word search.
+// It will allow up to 2 indexes to each be checked for their respective letters
+    func getRandomWord(letter1 : Character, letterIndex1 : Int, letter2 : Character, letterIndex2 : Int, _ newMaxSize : Int) -> WordStruct {
+        var maxSize = newMaxSize
+        if maxSize == 0 {
+            maxSize = 20
+        }
+        var newWordStruct = WordStruct()
+        let startingSearchIndex = 0
+        
+//        print("letter1: \(letter1)")
+//        print("letter2: \(letter2)")
+        
+        for i in startingSearchIndex...(WordList.count - 1) {
+            
+                if WordList[i].size - 1 >= letterIndex2 && WordList[i].size <= maxSize && WordList[i].size > 3 {
+//                    print(WordList[i].word)
+                    
+                    
+                    var j = 0
+                    while (j + letterIndex2 - letterIndex1) < WordList[i].size{
+//                        print(WordList[i].size)
+//                        print(j)
+                        
+                        
+                        let tempLetter1 = WordList[i].wordArr[j]
+//                        print ("tempLetter1: \(tempLetter1)")
+                        
+                        let tempLetter2 = WordList[i].wordArr[j + (letterIndex2 - letterIndex1) - 1]
+//                        print ("tempLetter2: \(tempLetter2)")
+                        
+                        if  letter1 == tempLetter1 && letter2 == tempLetter2 && (j + (letterIndex2 - letterIndex1 - 1)) < WordList[i].size {
+                            newWordStruct.word = WordList[i].word
+                            newWordStruct.clue = WordList[i].definition
+                            newWordStruct.wordLength = newWordStruct.word.count
+//                            print("random word: \(newWordStruct.word)")
+//                            print("WordList.count: \(WordList.count)")
+//                            print("startingSearchIndex: \(startingSearchIndex)")
+                            break
+                        }
+                        j += 1
+                    }
+                }
+        }
+    
+        return newWordStruct
+    }
 }
 
-//    func getRandomWord(letter : Character, index : Int) {
-//        
-//        let startingSearchIndex = Int.random(in: 0 ... (WordList.count - 1))
-//        var found = false
-//        var word = ""
-//        for i in startingSearchIndex...(WordList.count - 1) {
-//            if (!found) {
-//                if WordList[i].size - 1 >= index {
-//                    if WordList[i].wordArr[index] == letter {
-//                        word = WordList[i].word
-//                        found = true
-//                        print("random word: \(word)")
-//                        print("WordList.count: \(WordList.count)")
-//                        print("startingSearchIndex: \(startingSearchIndex)")
-//                        break
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
