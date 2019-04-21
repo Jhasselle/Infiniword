@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,63 +15,110 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Infiniword" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-fV-a4e" userLabel="KeyboardStackview">
-                                <rect key="frame" x="20" y="696" width="374" height="166"/>
-                            </stackView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4k4-Fp-nJY">
-                                <rect key="frame" x="20" y="44" width="374" height="529"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-18-SoA" userLabel="UIViewCrosswordParent">
+                                <rect key="frame" x="19" y="88" width="340" height="403"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yDa-ph-hdt">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="610"/>
+                                    <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YD2-vj-VOC" userLabel="viewForEmbeddingWebView">
+                                        <rect key="frame" x="-2" y="251" width="343" height="152"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.046124173021093513" green="0.086256542714399725" blue="0.2063335137472081" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yDa-ph-hdt" userLabel="UIViewCrossword">
+                                        <rect key="frame" x="22" y="0.0" width="294" height="403"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="egP-Tb-9TU">
-                                                <rect key="frame" x="-20" y="-360" width="415" height="970"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <rect key="frame" x="0.0" y="-360" width="294" height="763"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                 <gestureRecognizers/>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="pPz-fc-EHU" appends="YES" id="a1p-Yt-j8f"/>
-                                                </connections>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vk-9V-pYv" userLabel="UIViewClue">
+                                        <rect key="frame" x="0.0" y="0.0" width="340" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8M-1K-5PL" userLabel="LabelClue">
+                                                <rect key="frame" x="8" y="16" width="324" height="78"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxS-BJ-tXY" userLabel="LabelWord">
+                                                <rect key="frame" x="8" y="8" width="311" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.2614213198" green="0.077750476860000001" blue="0.066969945480000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="centerX" secondItem="4k4-Fp-nJY" secondAttribute="centerX" id="Dbu-Ci-HIq"/>
-                                    <constraint firstAttribute="trailing" secondItem="yDa-ph-hdt" secondAttribute="trailing" id="Gs2-OA-5t6"/>
-                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="centerY" secondItem="4k4-Fp-nJY" secondAttribute="centerY" constant="40.5" id="KMB-0e-9Og"/>
-                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="top" secondItem="4k4-Fp-nJY" secondAttribute="top" id="aEA-Hf-ltf"/>
-                                    <constraint firstItem="yDa-ph-hdt" firstAttribute="leading" secondItem="4k4-Fp-nJY" secondAttribute="leading" id="h8c-CU-aqR"/>
-                                    <constraint firstAttribute="bottom" secondItem="yDa-ph-hdt" secondAttribute="bottom" constant="-81" id="nQ7-VI-W6U"/>
-                                </constraints>
-                            </scrollView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMt-7q-866" userLabel="UIViewKeyboard">
+                                <rect key="frame" x="16" y="518" width="346" height="139"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-fV-a4e" userLabel="KeyboardStackview">
+                                        <rect key="frame" x="8" y="8" width="330" height="123"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K7K-S5-aue" userLabel="UIViewToolBar">
+                                <rect key="frame" x="-1" y="1" width="377" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mc-vg-syY" userLabel="Back">
+                                        <rect key="frame" x="14" y="19" width="34" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Back"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trd-b2-yk0" userLabel="Settings">
+                                        <rect key="frame" x="318" y="19" width="57" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Settings"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JD3-aJ-vp7">
+                                        <rect key="frame" x="167" y="28" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="leading" secondItem="PRs-fV-a4e" secondAttribute="leading" id="39Y-We-4Ee"/>
-                            <constraint firstItem="PRs-fV-a4e" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="696" id="BKo-a4-0YV"/>
-                            <constraint firstItem="PRs-fV-a4e" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Bn6-gl-wqk"/>
-                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="XNK-T7-2EQ"/>
-                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ZXP-bx-Lhz"/>
-                            <constraint firstAttribute="bottom" secondItem="4k4-Fp-nJY" secondAttribute="bottom" constant="323" id="gkL-ad-PhM"/>
-                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="trailing" secondItem="PRs-fV-a4e" secondAttribute="trailing" id="m9f-lV-dyz"/>
-                            <constraint firstItem="4k4-Fp-nJY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="uB4-gL-ZBP"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.010526495699424694" green="0.10306947969543145" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="KeyboardStackview" destination="PRs-fV-a4e" id="es7-cv-EOC"/>
+                        <outlet property="LabelClue" destination="P8M-1K-5PL" id="ufF-I6-TSr"/>
+                        <outlet property="LabelWord" destination="GxS-BJ-tXY" id="Zs6-nM-tZm"/>
                         <outlet property="MasterStackview" destination="egP-Tb-9TU" id="pmn-AJ-L21"/>
-                        <outlet property="pinchGesture" destination="pPz-fc-EHU" id="prf-7u-BNE"/>
+                        <outlet property="SuperUltimateGrandMasterView" destination="8bC-Xf-vdC" id="P7J-Jn-UPj"/>
+                        <outlet property="UIViewClue" destination="9Vk-9V-pYv" id="46T-vm-WsC"/>
+                        <outlet property="UIViewCrossword" destination="yDa-ph-hdt" id="E5U-Ci-OmB"/>
+                        <outlet property="UIViewCrosswordParent" destination="SN9-18-SoA" id="CFH-lG-dux"/>
+                        <outlet property="UIViewKeyboard" destination="xMt-7q-866" id="Z7B-bz-JNJ"/>
+                        <outlet property="UIViewToolBar" destination="K7K-S5-aue" id="CIy-OH-y2Y"/>
+                        <outlet property="viewForEmbeddingWebView" destination="YD2-vj-VOC" id="AVE-j7-bEe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="pPz-fc-EHU"/>
             </objects>
-            <point key="canvasLocation" x="136.23188405797103" y="125.22321428571428"/>
+            <point key="canvasLocation" x="135.19999999999999" y="124.58770614692655"/>
         </scene>
     </scenes>
 </document>

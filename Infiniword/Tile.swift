@@ -13,7 +13,7 @@ class Tile : UIButton {
     
     override open var intrinsicContentSize: CGSize {
         get {
-            return CGSize(width: 25, height: 25)
+            return CGSize(width: 20, height: 20)
         }
     }
     
@@ -39,6 +39,7 @@ class Tile : UIButton {
         adjustViewFit()
         self.disable() // show black box
         self.hide() // make invisible
+        self.setTitle("", for: .normal)
         self.setTitleColor(UIColor.white, for: .normal)
     }
     
@@ -49,10 +50,13 @@ class Tile : UIButton {
     func hide() {
         self.isHidden = true
         self.alpha = 0
+        self.titleLabel!.alpha = 0
     }
     func show() {
-        self.alpha = 1
+        
         self.isHidden = false
+        self.alpha = 1
+        self.titleLabel!.alpha = 1
         self.setTitleColor(UIColor.black, for: .normal)
         if (xWordExists || yWordExists) {
             self.backgroundColor = UIColor.white

@@ -10,25 +10,11 @@
 
 import Foundation
 
-struct DictionaryEntry {
-    var word = ""
-    var definition = ""
-    var wordArr : [Character] = []
-    var size = 0
-    
-    mutating func createWordArr() {
-        for char in word {
-            size += 1
-            wordArr.append(char)
-        }
-        
-    }
-}
-
 class DictionaryOverlord {
     
+    // A list of all the words and their related data
     var WordList = [DictionaryEntry]()
-
+    
     init() {
         
         if let path = Bundle.main.path(forResource: "dictionaries/eng_dict", ofType: "json") {
@@ -36,8 +22,10 @@ class DictionaryOverlord {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let wordArray = try JSONSerialization.jsonObject(with: data, options:.mutableLeaves) as? [Any]
                 let numOfWords = try Int(wordArray!.count)
-
+                
                 for i in 0..<numOfWords {
+                    // JSONSerialization by default is turning each entry of this {"word":"definition"} JSON array into a legacy dictionary of size one.
+                    // I want all my words in a simple array, so I'm casting(?) them into the current non-legacy Dictionary in order to get the key value pair.
                     let testDict = wordArray![i] as! Dictionary<String,String>
                     for (key, value) in testDict {
                         
@@ -57,6 +45,8 @@ class DictionaryOverlord {
         }
     }
     
+    // Parameters: Size, the number of letters.
+    // Returns: Wordstruct of the random word.
     func getRandomWord(size:Int) -> WordStruct {
 
         var newWordStruct = WordStruct()
@@ -76,8 +66,9 @@ class DictionaryOverlord {
     }
     
 
-    
-    func getRandomWord(letter : Character, index : Int, _ newMaxSize : Int) -> WordStruct {
+    // Parameters: Size, the number of letters.
+    // Returns: Wordstruct of the random word.
+    func getRandomWord(letter : Character, index : Int, newMaxSize : Int) -> WordStruct {
         var maxSize = newMaxSize
         if maxSize == 0 {
             maxSize = 20
@@ -88,13 +79,13 @@ class DictionaryOverlord {
         for i in startingSearchIndex...(WordList.count - 1) {
             if (!found) {
                 if WordList[i].size - 1 >= index && WordList[i].size <= maxSize && WordList[i].size > 3{
-                    if WordList[i].wordArr[index] == letter {
+                    if WordList[i].wordCharArr[index] == letter {
                         newWordStruct.word = WordList[i].word
                         newWordStruct.clue = WordList[i].definition
                         newWordStruct.wordLength = newWordStruct.word.count
-                        print("random word: \(newWordStruct.word)")
-                        print("WordList.count: \(WordList.count)")
-                        print("startingSearchIndex: \(startingSearchIndex)")
+//                        print("random word: \(newWordStruct.word)")
+//                        print("WordList.count: \(WordList.count)")
+//                        print("startingSearchIndex: \(startingSearchIndex)")
                         found = true
                         break
                     }
@@ -106,13 +97,13 @@ class DictionaryOverlord {
             for i in startingSearchIndex...(WordList.count - 1) {
                 if (!found) {
                     if WordList[i].size - 1 >= index && WordList[i].size <= maxSize  && WordList[i].size > 3{
-                        if WordList[i].wordArr[index] == letter {
+                        if WordList[i].wordCharArr[index] == letter {
                             newWordStruct.word = WordList[i].word
                             newWordStruct.clue = WordList[i].definition
                             newWordStruct.wordLength = newWordStruct.word.count
-                            print("random word: \(newWordStruct.word)")
-                            print("WordList.count: \(WordList.count)")
-                            print("startingSearchIndex: \(startingSearchIndex)")
+//                            print("random word: \(newWordStruct.word)")
+//                            print("WordList.count: \(WordList.count)")
+//                            print("startingSearchIndex: \(startingSearchIndex)")
                             found = true
                             break
                         }
@@ -128,7 +119,7 @@ class DictionaryOverlord {
     
 // This is the brute force implementation of the word search.
 // It will allow up to 2 indexes to each be checked for their respective letters
-    func getRandomWord(letter1 : Character, letterIndex1 : Int, letter2 : Character, letterIndex2 : Int, _ newMaxSize : Int) -> WordStruct {
+    func getRandomWord(letter1 : Character, letterIndex1 : Int, letter2 : Character, letterIndex2 : Int, newMaxSize : Int) -> WordStruct {
         var maxSize = newMaxSize
         if maxSize == 0 {
             maxSize = 20
@@ -151,10 +142,10 @@ class DictionaryOverlord {
 //                        print(j)
                         
                         
-                        let tempLetter1 = WordList[i].wordArr[j]
+                        let tempLetter1 = WordList[i].wordCharArr[j]
 //                        print ("tempLetter1: \(tempLetter1)")
                         
-                        let tempLetter2 = WordList[i].wordArr[j + (letterIndex2 - letterIndex1) - 1]
+                        let tempLetter2 = WordList[i].wordCharArr[j + (letterIndex2 - letterIndex1) - 1]
 //                        print ("tempLetter2: \(tempLetter2)")
                         
                         if  letter1 == tempLetter1 && letter2 == tempLetter2 && (j + (letterIndex2 - letterIndex1 - 1)) < WordList[i].size {
@@ -175,3 +166,17 @@ class DictionaryOverlord {
     }
 }
 
+struct DictionaryEntry {
+    var word = ""
+    var definition = ""
+    var wordCharArr : [Character] = []
+    var size = 0
+    
+    mutating func createWordArr() {
+        for char in word {
+            size += 1
+            wordCharArr.append(char)
+        }
+        
+    }
+}
