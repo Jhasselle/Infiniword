@@ -240,9 +240,8 @@ class DictionaryOverlord {
     }
     
     
-    // #2
     func getRandomWord_2(letter1 : Character, letter1_pos_x : Int, letter2 : Character, letter2_pos_x : Int, newMaxSize : Int) -> WordStruct {
-        print("\tStart getRandomWord #4")
+        print("\tStart getRandomWord #2")
         var maxSize = newMaxSize
         if maxSize == 0 {
             maxSize = 13

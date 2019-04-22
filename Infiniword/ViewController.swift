@@ -72,6 +72,9 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
         
         initializeCustomViews()
         initializeWebView()
+        currentTile = crossword.Tiles[crossword.Words[0].pos.x]
+        highlightCurrentTile()
+        tilePressed2()
     }
     
     //Defining pinchGesture to mimic zooming in/out
@@ -215,12 +218,19 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
         
         
         currentWord = crossword.Words[wordIndex]
-        LabelWord.text = crossword.Words[wordIndex].word
+        LabelWord.text = crossword.Words[wordIndex].word // "???"
         LabelClue.text = crossword.Words[wordIndex].clue
         LabelWordNumber.text = String(crossword.Words[wordIndex].wordIndex + 1)
         
-        
         highlightCurrentTile()
+    }
+    
+    func tilePressed2() {
+        crossword.highlightWord(wordIndex: 0)
+        currentWord = crossword.Words[0]
+        LabelWord.text = crossword.Words[0].word // "???"
+        LabelClue.text = crossword.Words[0].clue
+        LabelWordNumber.text = String(crossword.Words[0].wordIndex + 1)
     }
     
     func unhighlightCurrentTile() {
@@ -314,12 +324,15 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
 
 
 
+    
+    var iter = 0
     @IBAction func keyboardPressed(_ sender: KeyboardButton) {
         
         let keyboardLetter = sender.titleLabel!.text
         currentTile.setTitle(keyboardLetter, for: .normal)
         unhighlightCurrentTile()
-        
+        crossword.highlightWord(wordIndex: iter)
+        iter += 1
         if currentTile.xWordExists {
 //            print(currentTile.xWordPos)
 //            print(currentWord.word)

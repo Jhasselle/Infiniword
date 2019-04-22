@@ -88,7 +88,12 @@ class Crossword: UIStackView {
                 self.actualHeight += 1
             }
         }
-        print("Adding: \(newWordStruct.word)")
+        print("\n\tAdding: \(newWordStruct.word)")
+        if (newWordStruct.isWordHorizontal) {
+            print("\t\tisBoard?: \(newWordStruct.isWordHorizontal)")
+        }
+        print("\t\tPos: \(newWordStruct.pos)\n")
+
         Words.append(newWordStruct)
     }
     
@@ -148,7 +153,7 @@ class Crossword: UIStackView {
     
     
     // MARK:
-    // MARK:
+    // MARK: Pikes
     func findPikes(steps : [WordStruct], pikesPrev : [WordStruct], dict : DictionaryOverlord) -> [WordStruct] {
         print ("\n\t\tfindPikes")
         
@@ -214,9 +219,9 @@ class Crossword: UIStackView {
         pikeMiddle.pos = (landingStep.pos.x + pikeMiddleRelativeX, landingStep.pos.y + pikeMiddle.word.count - 1)
         pikeRight.pos = (landingStep.pos.x + pikeRightRelativeX, landingStep.pos.y + pikeRight.word.count - 1)
         
-//        print(pikeLeft.pos)
-//        print(pikeMiddle.pos)
-//        print(pikeRight.pos)
+        print(pikeLeft.pos)
+        print(pikeMiddle.pos)
+        print(pikeRight.pos)
         
         pikeLeft.wordIndex = Words.count
         Words.append(pikeLeft)
@@ -234,93 +239,8 @@ class Crossword: UIStackView {
     }
 
     
-    
-    
-    
-    
-    
-    
-    
-//    // MARK:
-//    // MARK:
-//    func findSteps(stepsPrev : [WordStruct], pikes : [WordStruct], dict : DictionaryOverlord) -> [WordStruct] {
-//
-//        print ("\n\t\tfindSteps")
-//
-//        var returnSteps : [WordStruct] = []
-//        var leftPikePos = (x:-1, y:-1)
-//        var middlePikePos = (x:-1, y:-1)
-//        var rightPikePos = (x:-1, y:-1)
-//
-//
-//        leftPikePos = pikes[0].pos
-//        let leftPike = pikes[0]
-//
-//        middlePikePos = pikes[1].pos
-//        let middlePike = pikes[1]
-//
-//        rightPikePos = pikes[2].pos
-//        let rightPike = pikes[2]
-//
-//        // A good starting heuristic
-////        let landingStartPosX = Int.random(in: 0 ... 1)
-//        let landingStartPosX = 0
-//        var newWordStruct : WordStruct
-//        // If our heuristic went past the left pike, then move on
-//
-//        print("landingStartPosX: ", landingStartPosX)
-//        print("leftPikePos: ", leftPikePos)
-//        print("leftPike:", leftPike.word)
-//        print("middlePike:", middlePike.word)
-//        print("rightPike:", rightPike.word)
-//
-//        if landingStartPosX <= leftPikePos.x  {
-//            print("step if")
-//
-//           // if (pikes.count )
-//            let letter_1_index = leftPike.pos.x - landingStartPosX
-//            let letter_1 = Character(pikes[0].word[0])
-//
-//            let letter_2_index = middlePike.pos.x - landingStartPosX
-//            let letter_2 = Character(middlePike.word[0])
-//
-//            newWordStruct = dict.getRandomWord(letter1: letter_1, letterIndex1: letter_1_index, letter2: letter_2, letterIndex2: letter_2_index, newMaxSize: 13)
-//
-//            newWordStruct.pos = (landingStartPosX, pikes[1].pos.y)
-//            newWordStruct.wordIndex = Words.count
-//            Words.append(newWordStruct)
-//            returnSteps.append(newWordStruct)
-//
-//            return returnSteps
-//        }
-//        else {
-//
-//            print("step else")
-//
-//            let letter_1_index = leftPike.pos.x - landingStartPosX
-//            let letter_1 = Character(middlePike.word[0])
-//
-//            let letter_2_index = rightPike.pos.x - landingStartPosX
-//            let letter_2 = Character(rightPike.word[0])
-//
-//            let letter_3_index = rightPike.pos.x - landingStartPosX
-//            let letter_3 = Character(rightPike.word[0])
-//
-//
-////            newWordStruct = dict.getRandomWord(letter1: letter_1, letterIndex1: letter_1_index, letter2: letter_2, letterIndex2: letter_2_index, newMaxSize: 13 - landingStartPosX)
-//            newWordStruct = dict.getRandomWordForStep(letter1: <#T##Character#>, letter1_pos_x: <#T##Int#>, letter2: <#T##Character#>, letter2_pos_x: <#T##Int#>, letter3: <#T##Character#>, letter3_pos_x: <#T##Int#>)
-//
-//            newWordStruct.pos = (landingStartPosX, pikes[1].pos.y)
-//            newWordStruct.wordIndex = Words.count
-//            Words.append(newWordStruct)
-//            returnSteps.append(newWordStruct)
-//
-//            return returnSteps
-//        }
-//    }
-    
     // MARK:
-    // MARK:
+    // MARK: Steps
     func findSteps(stepsPrev : [WordStruct], pikes : [WordStruct], dict : DictionaryOverlord) -> [WordStruct] {
         
         print ("\n\t\tfindSteps")
@@ -337,6 +257,7 @@ class Crossword: UIStackView {
         let landingStartPosX = 0
         var newWordStruct : WordStruct
 
+        
         let letter_1_index = leftPike.pos.x - landingStartPosX - 1
         let letter_1 = Character(leftPike.word[0])
 
@@ -347,11 +268,13 @@ class Crossword: UIStackView {
         let letter_3 = Character(rightPike.word[0])
 
         newWordStruct = dict.getRandomWordForStep(letter1: letter_1, letter1_pos_x: letter_1_index, letter2: letter_2, letter2_pos_x: letter_2_index, letter3: letter_3, letter3_pos_x: letter_3_index)
-        newWordStruct.pos = (letter_1_index - newWordStruct.pos.x + 1, pikes[0].pos.y)
+            newWordStruct.pos = (letter_1_index - newWordStruct.pos.x + 1, pikes[0].pos.y)
         
         if newWordStruct.word == "x" {
             print("oh no!")
             newWordStruct = dict.getRandomWord_2(letter1: letter_1, letter1_pos_x: letter_1_index, letter2: letter_2, letter2_pos_x: letter_2_index, newMaxSize : 13)
+            newWordStruct.pos.y = pikes[0].pos.y
+            
         }
         
         if newWordStruct.word == "x" {
@@ -370,64 +293,7 @@ class Crossword: UIStackView {
     }
     
     
-//    func generateCrossword(dict : DictionaryOverlord) {
-//
-//        var currentHeight = 0
-//        var turnIsHorizontal = true
-//        //var prevWordGiftPos = (x:0,y:0)
-//        var prevVertPosX = 0
-//        var currentWordStruct = dict.getRandomWord(size: 9)
-//        currentWordStruct.pos = (0,0)
-//        var prevWordStruct = currentWordStruct
-//        setTilesForWord(currentWordStruct)
-//        Words.append(currentWordStruct)
-//        currentHeight += 1
-//        print("Adding: \(currentWordStruct.word)")
-//
-//        while (currentHeight + width < height) {
-//
-//            turnIsHorizontal = !turnIsHorizontal
-//            if !turnIsHorizontal { // Turn is Vertical
-//
-//
-//                // This assignment and loop prevents stacking vertical words
-////                var currentVerticalPosX = prevVertPosX
-////                while currentVerticalPosX == prevVertPosX {
-////                   currentVerticalPosX = Int.random(in: prevWordStruct.pos.x ... (prevWordStruct.word.count - 1))
-////                }
-//
-//
-//                // Pick random index from the horizontal word to grow our vertical word
-//                // Use this index as the last character of our word we want.
-//                // We don't have to worry about bounds, as we are always free to grow upward.
-//                let currentVerticalPosX = Int.random(in: prevWordStruct.pos.x ... (prevWordStruct.word.count - 1))
-//
-//                let prevWordIndexLetter = Character(prevWordStruct.word[currentVerticalPosX])
-//
-//                currentWordStruct = dict.getRandomWord(letter: prevWordIndexLetter, index: prevWordStruct.word.count - 1, newMaxSize: width)
-//                currentWordStruct.isWordHorizontal = false
-//
-//                currentWordStruct.pos = ((currentVerticalPosX), (prevWordStruct.pos.y + (currentWordStruct.word.count - 1)))
-//                currentHeight += currentWordStruct.word.count
-//
-//                prevVertPosX = currentVerticalPosX
-//            }
-//            else { // Turn is horizontal
-//                let prevWordLetterIndex = prevWordStruct.pos.x
-//                let prevWordLetter = Character(prevWordStruct.word[prevWordLetterIndex])
-//                currentWordStruct = dict.getRandomWord(letter: prevWordLetter, index: prevVertPosX, newMaxSize: width)
-//                currentWordStruct.pos = (0, prevWordStruct.pos.y)
-//            }
-//
-//
-//            print("Adding: \(currentWordStruct.word)")
-//            currentWordStruct.wordIndex = Words.count
-//            prevWordStruct = currentWordStruct
-//            Words.append(currentWordStruct)
-//            setTilesForWord(currentWordStruct)
-//
-//        }
-//    }
+
     
     func hideRow(rowIndex : Int) {
 //        print("Hiding row: \(rowIndex)")
@@ -513,6 +379,7 @@ class Crossword: UIStackView {
             }
             else {
             Tiles[i].backgroundColor = UIColor.init(white: CGFloat(1), alpha: CGFloat(0))
+            Tiles[i].disable()
             }
         }
     }
@@ -522,10 +389,13 @@ class Crossword: UIStackView {
     var counter = 0
     var timer = Timer()
     
+    
+    // I don't want it too dark,
+    // Each value should be below 230 and above 120
     func getRandomColor() -> UIColor {
-        let red   = CGFloat((arc4random() % 256)) / 255.0
-        let green = CGFloat((arc4random() % 256)) / 255.0
-        let blue  = CGFloat((arc4random() % 256)) / 255.0
+        let red   = CGFloat((arc4random() % 64) + 128) / 255.0
+        let green = CGFloat((arc4random() % 64) + 128) / 255.0
+        let blue  = CGFloat((arc4random() % 64) + 128) / 255.0
         let alpha = CGFloat(1.0)
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
@@ -554,3 +424,141 @@ struct WordStruct {
     var pos = (x:0, y:0)
     var wordIndex = 0
 }
+
+
+//    func generateCrossword(dict : DictionaryOverlord) {
+//
+//        var currentHeight = 0
+//        var turnIsHorizontal = true
+//        //var prevWordGiftPos = (x:0,y:0)
+//        var prevVertPosX = 0
+//        var currentWordStruct = dict.getRandomWord(size: 9)
+//        currentWordStruct.pos = (0,0)
+//        var prevWordStruct = currentWordStruct
+//        setTilesForWord(currentWordStruct)
+//        Words.append(currentWordStruct)
+//        currentHeight += 1
+//        print("Adding: \(currentWordStruct.word)")
+//
+//        while (currentHeight + width < height) {
+//
+//            turnIsHorizontal = !turnIsHorizontal
+//            if !turnIsHorizontal { // Turn is Vertical
+//
+//
+//                // This assignment and loop prevents stacking vertical words
+////                var currentVerticalPosX = prevVertPosX
+////                while currentVerticalPosX == prevVertPosX {
+////                   currentVerticalPosX = Int.random(in: prevWordStruct.pos.x ... (prevWordStruct.word.count - 1))
+////                }
+//
+//
+//                // Pick random index from the horizontal word to grow our vertical word
+//                // Use this index as the last character of our word we want.
+//                // We don't have to worry about bounds, as we are always free to grow upward.
+//                let currentVerticalPosX = Int.random(in: prevWordStruct.pos.x ... (prevWordStruct.word.count - 1))
+//
+//                let prevWordIndexLetter = Character(prevWordStruct.word[currentVerticalPosX])
+//
+//                currentWordStruct = dict.getRandomWord(letter: prevWordIndexLetter, index: prevWordStruct.word.count - 1, newMaxSize: width)
+//                currentWordStruct.isWordHorizontal = false
+//
+//                currentWordStruct.pos = ((currentVerticalPosX), (prevWordStruct.pos.y + (currentWordStruct.word.count - 1)))
+//                currentHeight += currentWordStruct.word.count
+//
+//                prevVertPosX = currentVerticalPosX
+//            }
+//            else { // Turn is horizontal
+//                let prevWordLetterIndex = prevWordStruct.pos.x
+//                let prevWordLetter = Character(prevWordStruct.word[prevWordLetterIndex])
+//                currentWordStruct = dict.getRandomWord(letter: prevWordLetter, index: prevVertPosX, newMaxSize: width)
+//                currentWordStruct.pos = (0, prevWordStruct.pos.y)
+//            }
+//
+//
+//            print("Adding: \(currentWordStruct.word)")
+//            currentWordStruct.wordIndex = Words.count
+//            prevWordStruct = currentWordStruct
+//            Words.append(currentWordStruct)
+//            setTilesForWord(currentWordStruct)
+//
+//        }
+//    }
+
+//    // MARK:
+//    // MARK:
+//    func findSteps(stepsPrev : [WordStruct], pikes : [WordStruct], dict : DictionaryOverlord) -> [WordStruct] {
+//
+//        print ("\n\t\tfindSteps")
+//
+//        var returnSteps : [WordStruct] = []
+//        var leftPikePos = (x:-1, y:-1)
+//        var middlePikePos = (x:-1, y:-1)
+//        var rightPikePos = (x:-1, y:-1)
+//
+//
+//        leftPikePos = pikes[0].pos
+//        let leftPike = pikes[0]
+//
+//        middlePikePos = pikes[1].pos
+//        let middlePike = pikes[1]
+//
+//        rightPikePos = pikes[2].pos
+//        let rightPike = pikes[2]
+//
+//        // A good starting heuristic
+////        let landingStartPosX = Int.random(in: 0 ... 1)
+//        let landingStartPosX = 0
+//        var newWordStruct : WordStruct
+//        // If our heuristic went past the left pike, then move on
+//
+//        print("landingStartPosX: ", landingStartPosX)
+//        print("leftPikePos: ", leftPikePos)
+//        print("leftPike:", leftPike.word)
+//        print("middlePike:", middlePike.word)
+//        print("rightPike:", rightPike.word)
+//
+//        if landingStartPosX <= leftPikePos.x  {
+//            print("step if")
+//
+//           // if (pikes.count )
+//            let letter_1_index = leftPike.pos.x - landingStartPosX
+//            let letter_1 = Character(pikes[0].word[0])
+//
+//            let letter_2_index = middlePike.pos.x - landingStartPosX
+//            let letter_2 = Character(middlePike.word[0])
+//
+//            newWordStruct = dict.getRandomWord(letter1: letter_1, letterIndex1: letter_1_index, letter2: letter_2, letterIndex2: letter_2_index, newMaxSize: 13)
+//
+//            newWordStruct.pos = (landingStartPosX, pikes[1].pos.y)
+//            newWordStruct.wordIndex = Words.count
+//            Words.append(newWordStruct)
+//            returnSteps.append(newWordStruct)
+//
+//            return returnSteps
+//        }
+//        else {
+//
+//            print("step else")
+//
+//            let letter_1_index = leftPike.pos.x - landingStartPosX
+//            let letter_1 = Character(middlePike.word[0])
+//
+//            let letter_2_index = rightPike.pos.x - landingStartPosX
+//            let letter_2 = Character(rightPike.word[0])
+//
+//            let letter_3_index = rightPike.pos.x - landingStartPosX
+//            let letter_3 = Character(rightPike.word[0])
+//
+//
+////            newWordStruct = dict.getRandomWord(letter1: letter_1, letterIndex1: letter_1_index, letter2: letter_2, letterIndex2: letter_2_index, newMaxSize: 13 - landingStartPosX)
+//            newWordStruct = dict.getRandomWordForStep(letter1: <#T##Character#>, letter1_pos_x: <#T##Int#>, letter2: <#T##Character#>, letter2_pos_x: <#T##Int#>, letter3: <#T##Character#>, letter3_pos_x: <#T##Int#>)
+//
+//            newWordStruct.pos = (landingStartPosX, pikes[1].pos.y)
+//            newWordStruct.wordIndex = Words.count
+//            Words.append(newWordStruct)
+//            returnSteps.append(newWordStruct)
+//
+//            return returnSteps
+//        }
+//    }
