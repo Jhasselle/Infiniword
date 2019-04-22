@@ -62,7 +62,7 @@ class Tile : UIButton {
             self.backgroundColor = UIColor.white
         }
         else {
-            self.backgroundColor = UIColor.black
+            self.backgroundColor = UIColor.init(white: CGFloat(1), alpha: CGFloat(0))
         }
     }
     // Prevents them from being pressed

@@ -18,11 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="5xs-LM-4Cf">
+                                <rect key="frame" x="-1" y="-612" width="377" height="1279"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-18-SoA" userLabel="UIViewCrosswordParent">
                                 <rect key="frame" x="19" y="88" width="340" height="403"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YD2-vj-VOC" userLabel="viewForEmbeddingWebView">
+                                    <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YD2-vj-VOC" userLabel="viewForEmbeddingWebView">
                                         <rect key="frame" x="-2" y="251" width="343" height="152"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.046124173021093513" green="0.086256542714399725" blue="0.2063335137472081" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -37,7 +41,6 @@
                                                 <gestureRecognizers/>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vk-9V-pYv" userLabel="UIViewClue">
                                         <rect key="frame" x="0.0" y="0.0" width="340" height="116"/>
@@ -57,11 +60,17 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfs-ZZ-usd" userLabel="LabelWordNumber">
+                                                <rect key="frame" x="282" y="8" width="50" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.2614213198" green="0.077750476860000001" blue="0.066969945480000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMt-7q-866" userLabel="UIViewKeyboard">
                                 <rect key="frame" x="16" y="518" width="346" height="139"/>
@@ -72,9 +81,8 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K7K-S5-aue" userLabel="UIViewToolBar">
+                            <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K7K-S5-aue" userLabel="UIViewToolBar">
                                 <rect key="frame" x="-1" y="1" width="377" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -96,16 +104,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.060140699149999997" green="0.067268818620000004" blue="0.080788515510000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.010526495699424694" green="0.10306947969543145" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="KeyboardStackview" destination="PRs-fV-a4e" id="es7-cv-EOC"/>
                         <outlet property="LabelClue" destination="P8M-1K-5PL" id="ufF-I6-TSr"/>
                         <outlet property="LabelWord" destination="GxS-BJ-tXY" id="Zs6-nM-tZm"/>
+                        <outlet property="LabelWordNumber" destination="Hfs-ZZ-usd" id="GaF-ED-S9R"/>
                         <outlet property="MasterStackview" destination="egP-Tb-9TU" id="pmn-AJ-L21"/>
                         <outlet property="SuperUltimateGrandMasterView" destination="8bC-Xf-vdC" id="P7J-Jn-UPj"/>
                         <outlet property="UIViewClue" destination="9Vk-9V-pYv" id="46T-vm-WsC"/>
@@ -121,4 +129,7 @@
             <point key="canvasLocation" x="135.19999999999999" y="124.58770614692655"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bg" width="415" height="4495"/>
+    </resources>
 </document>

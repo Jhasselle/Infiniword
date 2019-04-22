@@ -15,11 +15,13 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
     @IBOutlet var MasterStackview: UIStackView!
     var crossword : Crossword!
     var currentTile = Tile()
+    var currentWord = WordStruct()
     let dictionaryOverlord = DictionaryOverlord()
     
     @IBOutlet var UIViewClue: UIView!
     @IBOutlet var LabelClue: UILabel!
     @IBOutlet var LabelWord: UILabel!
+    @IBOutlet var LabelWordNumber: UILabel!
     //    var boardView : UIView!
     @IBOutlet weak var textField: UITextField!
 //    var viewHeight : Int!
@@ -88,11 +90,11 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
         print(viewWidth)
         
         let UIViewToolBarY = viewHeight * 0
-        let UIViewToolBarHeight = viewHeight * 0.1
+        let UIViewToolBarHeight = viewHeight * 0.9
         UIViewToolBar.frame = CGRect(x: 0.0, y: UIViewToolBarY, width: viewWidth, height: UIViewToolBarHeight)
         
-        let UIViewCrosswordParentY = viewHeight * 0.1
-        let UIViewCrosswordParentHeight = viewHeight * 0.65
+        let UIViewCrosswordParentY = viewHeight * 0.9
+        let UIViewCrosswordParentHeight = viewHeight * 0.66
         UIViewCrosswordParent.frame = CGRect(x: 0.0, y: UIViewCrosswordParentY, width: viewWidth, height: UIViewCrosswordParentHeight)
         
         UIViewCrossword.frame = UIViewCrosswordParent.frame
@@ -115,7 +117,7 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
 
     func initializeCrossword() {
         crossword = Crossword()
-        crossword.initialize(width: 13, height: 100)
+        crossword.initialize(width: 13, height: 150)
         initializeCrosswordRows()
         MasterStackview.addArrangedSubview(crossword)
         crossword.generateCrossword(dict: dictionaryOverlord)
@@ -187,8 +189,12 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
             wordIndex = sender.yWordIndex
         }
         crossword.highlightWord(wordIndex: wordIndex)
-        LabelClue.text = crossword.Words[wordIndex].clue
+        
+        
+        currentWord = crossword.Words[wordIndex]
         LabelWord.text = crossword.Words[wordIndex].word
+        LabelClue.text = crossword.Words[wordIndex].clue
+        LabelWordNumber.text = String(crossword.Words[wordIndex].wordIndex + 1)
     }
     // MARK:
     // MARK: Keyboard Stuff
@@ -267,23 +273,16 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
     var DEBUG_LETTER2 = "b"
 
     @IBAction func keyboardPressed(_ sender: KeyboardButton) {
-        crossword.deleteRow()
-        crossword.clearHighlighting()
+
+        //crossword.clearHighlighting()
         
-        if DEBUG_KEYBOARDNUMPRESSED == 0 {
-            DEBUG_LETTER1 = sender.letter
-            DEBUG_KEYBOARDNUMPRESSED += 1
-        }
-        else {
-            DEBUG_LETTER2 = sender.letter
-            
-            let newWordStruct = dictionaryOverlord.getRandomWord(letter1: Character(DEBUG_LETTER1), letterIndex1: 0, letter2: Character(DEBUG_LETTER2), letterIndex2: 3, newMaxSize: 0)
-            
-//            showWebImages(newWordStruct.word)
-            
-            DEBUG_KEYBOARDNUMPRESSED = 0
-        }
     }
+    
+    
+    
+    
+    
+    
     
     func showWebImages(_ word : String) {
         
