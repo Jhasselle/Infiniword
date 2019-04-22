@@ -122,8 +122,8 @@ class Crossword: UIStackView {
 
                 var pikeNum = 0
                 for pike in pikes {
-                    print("pike.word: \(pike.word)")
-                    print("pikeNum:\(pikeNum)")
+//                    print("pike.word: \(pike.word)")
+//                    print("pikeNum:\(pikeNum)")
                     pikeNum += 1
                     setTilesForWord(pike)
                 }
@@ -136,8 +136,8 @@ class Crossword: UIStackView {
                 
                 var stepNum = 0
                 for step in steps {
-                    print("step.word: \(step.word)")
-                    print("stepNum:\(stepNum)")
+//                    print("step.word: \(step.word)")
+//                    print("stepNum:\(stepNum)")
                     stepNum += 1
                     setTilesForWord(step)
                 }
@@ -167,18 +167,18 @@ class Crossword: UIStackView {
         let pikeRightRelativeX = Int.random(in: (stepWidth*2/3) ... (stepWidth) - 1)
         
         
-        print("\npikeLeftRelativeX = \(pikeLeftRelativeX)" )
-        print("pikeMiddleRelativeX = \(pikeMiddleRelativeX)" )
-        print("pikeRightRelativeX = \(pikeRightRelativeX)" )
-        
+//        print("\npikeLeftRelativeX = \(pikeLeftRelativeX)" )
+//        print("pikeMiddleRelativeX = \(pikeMiddleRelativeX)" )
+//        print("pikeRightRelativeX = \(pikeRightRelativeX)" )
+//
         
         
         let pikeLeftEndingChar = Character(landingStep.word[pikeLeftRelativeX])
         let pikeMiddleEndingChar = Character(landingStep.word[pikeMiddleRelativeX])
         let pikeRightEndingChar = Character(landingStep.word[pikeRightRelativeX])
-        print("pikeLeftEndingChar = \(pikeLeftEndingChar)" )
-        print("pikeMiddleEndingChar = \(pikeMiddleEndingChar)" )
-        print("pikeRightEndingChar = \(pikeRightEndingChar)" )
+//        print("pikeLeftEndingChar = \(pikeLeftEndingChar)" )
+//        print("pikeMiddleEndingChar = \(pikeMiddleEndingChar)" )
+//        print("pikeRightEndingChar = \(pikeRightEndingChar)" )
         
         
         var numOfTries = 0
@@ -214,9 +214,9 @@ class Crossword: UIStackView {
         pikeMiddle.pos = (landingStep.pos.x + pikeMiddleRelativeX, landingStep.pos.y + pikeMiddle.word.count - 1)
         pikeRight.pos = (landingStep.pos.x + pikeRightRelativeX, landingStep.pos.y + pikeRight.word.count - 1)
         
-        print(pikeLeft.pos)
-        print(pikeMiddle.pos)
-        print(pikeRight.pos)
+//        print(pikeLeft.pos)
+//        print(pikeMiddle.pos)
+//        print(pikeRight.pos)
         
         pikeLeft.wordIndex = Words.count
         Words.append(pikeLeft)

@@ -2,6 +2,26 @@
 import UIKit
 import WebKit
 
+extension UIView {
+    @IBInspectable
+    var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor {
+                return UIColor(cgColor: color)
+            }
+            return nil
+        }
+        set {
+            if let color = newValue {
+                layer.borderColor = color.cgColor
+            } else {
+                layer.borderColor = nil
+            }
+        }
+    }
+}
+    
+
 class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     @IBOutlet var SuperUltimateGrandMasterView: UIView!
     @IBOutlet var UIViewCrosswordParent: UIView!
@@ -16,6 +36,7 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
     var crossword : Crossword!
     var currentTile = Tile()
     var currentWord = WordStruct()
+    var currentWordIndex = 0
     let dictionaryOverlord = DictionaryOverlord()
     
     @IBOutlet var UIViewClue: UIView!
@@ -178,6 +199,8 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
     // MARK: Tile Stuff
     @IBAction func tilePressed(_ sender: Tile) {
         
+        unhighlightCurrentTile()
+        
         print("TILE PRESSED")
         currentTile = sender
         var wordIndex = 0
@@ -195,6 +218,30 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
         LabelWord.text = crossword.Words[wordIndex].word
         LabelClue.text = crossword.Words[wordIndex].clue
         LabelWordNumber.text = String(crossword.Words[wordIndex].wordIndex + 1)
+        
+        
+        highlightCurrentTile()
+    }
+    
+    func unhighlightCurrentTile() {
+        self.currentTile.layer.borderWidth = 0
+    }
+    
+    func highlightCurrentTile() {
+//        UIView.setAnimationsEnabled(false)
+//        UIView.setAnimationsEnabled(true)
+        //unhighlightCurrentTile()
+        UIView.animate(withDuration: 1.0, delay: 0.0, options:[.autoreverse, .repeat], animations: {
+            self.currentTile.layer.borderWidth = 3
+            //self.currentTile.layer.borderColor = UIColor.cyan as! CGColor
+        }, completion:nil)
+    }
+    
+    func selectTile(wordIndex : Int) {
+        
+//        currentTile.
+//        button.layer.borderWidth = 1
+//        button.layer.borderColor = UIColor.black.cgColor
     }
     // MARK:
     // MARK: Keyboard Stuff
@@ -267,14 +314,31 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
 
 
 
-
-    var DEBUG_KEYBOARDNUMPRESSED = 0
-    var DEBUG_LETTER1 = "a"
-    var DEBUG_LETTER2 = "b"
-
     @IBAction func keyboardPressed(_ sender: KeyboardButton) {
-
-        //crossword.clearHighlighting()
+        
+        let keyboardLetter = sender.titleLabel!.text
+        currentTile.setTitle(keyboardLetter, for: .normal)
+        unhighlightCurrentTile()
+        
+        if currentTile.xWordExists {
+//            print(currentTile.xWordPos)
+//            print(currentWord.word)
+//            print(currentTile.xIndex)
+//            print(currentTile.tileIndex)
+            
+            
+            
+//            if currentTile.tileIndex + 1 >
+            
+            currentTile = crossword.Tiles[currentTile.tileIndex + 1]
+            highlightCurrentTile()
+        }
+        else if currentTile.yWordExists {
+            
+        }
+        
+        
+        
         
     }
     
@@ -284,21 +348,21 @@ class ViewController: UIViewController, WKUIDelegate, UITextFieldDelegate, UIScr
     
     
     
-    func showWebImages(_ word : String) {
-        
-        _ = "https://www.google.com/search?q=cute+cat&tbm=isch&hl=en&tbs=qdr:w"
-        
-        let urlStart = "https://www.google.com/search?q="
-        let urlEnd = "&tbm=isch&hl=en&tbs=qdr:w"
-        let searchUrl = urlStart + word + urlEnd
-        
-        let myURL = URL(string:searchUrl)
-        let myRequest = URLRequest(url: myURL!)
-        
-//        webView.load(myRequest)
-        
-        print("showWebImages: ", word)
-    }
+//    func showWebImages(_ word : String) {
+//
+//        _ = "https://www.google.com/search?q=cute+cat&tbm=isch&hl=en&tbs=qdr:w"
+//
+//        let urlStart = "https://www.google.com/search?q="
+//        let urlEnd = "&tbm=isch&hl=en&tbs=qdr:w"
+//        let searchUrl = urlStart + word + urlEnd
+//
+//        let myURL = URL(string:searchUrl)
+//        let myRequest = URLRequest(url: myURL!)
+//
+////        webView.load(myRequest)
+//
+//        print("showWebImages: ", word)
+//    }
     
     
 
